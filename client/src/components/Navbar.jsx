@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from './buttons'
-import { AddRounded } from "@mui/icons-material"
+import { AddRounded, ExploreRounded } from "@mui/icons-material"
+import { useNavigat, useLocation, useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
    flec: 1;
@@ -20,14 +21,39 @@ const Container = styled.div`
 `;
 
 const Navbar = () => {
-  return (
-    <Container>
-        GenAI-Image
-        <Button text="Create new post" leftIcon={<AddRounded style={{
-            fontSize: "18",
-        }} />} />
-    </Container>
-  )
+    const navigate = useNavigate();
+    const location = useLocation();
+    const path = location.pathname.split("/");
+    return (
+        <Container>
+            GenAI-Image
+            {
+                path[1] === 'post' ? (
+                    <Button
+                        onClick={() => navigate('/')}
+                        text="Explore Post"
+                        leftIcon={<ExploreRounded style={{
+                            fontSize: "18",
+                        }}
+                        />
+                        }
+                        type="secondary"
+                    />
+                ) : (
+
+                    <Button
+                        onClick={() => navigate('/post')}
+                        text="Create new post"
+                        leftIcon={<AddRounded style={{
+                            fontSize: "18",
+                        }}
+                        />
+                        }
+                    />
+                )
+            }
+        </Container>
+    )
 }
 
 export default Navbar
