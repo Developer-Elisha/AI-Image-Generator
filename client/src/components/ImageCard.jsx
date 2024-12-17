@@ -68,7 +68,7 @@ const ImageCard = ({ item }) => {
                 width="100%"
                 src={item?.photo} />
             <HoverOverlay>
-                <Prompt>{item?.Prompt}</Prompt>
+                <Prompt>{item?.prompt}</Prompt>
                 <div style={{
                   width: '100%',
                   display: 'flex',
