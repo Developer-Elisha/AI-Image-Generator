@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from './buttons'
 import { AddRounded, ExploreRounded } from "@mui/icons-material"
-import { useNavigat, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
    flec: 1;
