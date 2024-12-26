@@ -65,6 +65,8 @@ const ImageCard = ({ item }) => {
     return (
         <Card>
             <LazyLoadImage
+                alt={item?.prompt}
+                style={{borderRadius: "12px"}}
                 width="100%"
                 src={item?.photo} />
             <HoverOverlay>
