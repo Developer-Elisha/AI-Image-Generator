@@ -26,7 +26,7 @@ export const generateImage = async (req, res, next) => {
             response_format: 'b64_json',
         });
         const generateImage = response.data.data[0].b64_json;
-        return res.status(200).json({ photo: generateImage });
+        return res.status(200).jsom({ photo: generateImage });
     } catch(error) {
         next(createError(
             error.status,
