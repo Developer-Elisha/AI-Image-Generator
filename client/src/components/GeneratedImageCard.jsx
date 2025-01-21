@@ -1,48 +1,64 @@
-import { CircularProgress } from '@mui/material';
-import React from 'react';
-import styled from 'styled-components';
+import { CircularProgress, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
   flex: 1;
-  min-height: 300px;
+  padding: 16px;
+  border: 2px dashed ${({ theme }) => theme.yellow + "90"};
+  color: ${({ theme }) => theme.arrow + "80"};
+  border-radius: 20px;
   display: flex;
-  gap: 16px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  border: 2px dashed ${({ theme }) => theme.yellow};
-  color: ${({ theme }) => theme.arrow + 80};
-  border-radius: 20px;
+  gap: 12px;
+  text-align: center;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 400px;
+  background: ${({ theme }) => theme.black + "50"};
+  border-radius: 18px;
   object-fit: cover;
-  border-radius: 24px;
-  background: ${({ theme, src }) => theme.black + 50};
-  @media (max-width: 768px) {
-    padding: 6px 10px;
-  }
 `;
 
-const GeneratedImageCard = ({ src, loading }) => {
+const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 8px;
+`;
+
+const GeneratedImageCard = ({ src, loading, onRetry }) => {
+  const [showError, setShowError] = useState(false);
+
+  useEffect(() => {
+    if (loading) {
+      setShowError(false); // Hide error while still loading
+    } else {
+      const timer = setTimeout(() => {
+        setShowError(true); // Show error after 3 seconds when still loading
+      }, 3000); // 3 seconds delay
+
+      return () => clearTimeout(timer); // Cleanup timer on component unmount
+    }
+  }, [loading]);
+
   return (
     <Container>
-        {loading ? (
-          <>
-            <CircularProgress style={{ color: "inherit", width: "24px", height: "24px" }} />
-            Generating Your Image ...</>
-        ) : (
-          <>
-            {src ? (
-              <Image src={src} />
-            ) : (
-              <>Write a prompt to generate an image</>
-            )}
-          </>
-        )}
+      {loading ? (
+        <>
+          <CircularProgress sx={{ color: "inherit", width: 32, height: 32 }} />
+          <span>Generating Your Image...</span>
+        </>
+      ) : (
+        <span>Write a prompt to generate an image</span>
+      )}
+
+      {showError && !src && (
+        <ErrorMessage>Your API key is expired</ErrorMessage>
+      )}
     </Container>
   );
 };

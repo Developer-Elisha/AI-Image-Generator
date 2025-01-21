@@ -1,9 +1,11 @@
-import React from 'react'
+import {React, useState} from 'react'
 import styled from 'styled-components'
 import Button from './buttons'
+import { useNavigate } from 'react-router-dom'
 import TextInput from './TextInput'
 import { AutoAwesome } from '@mui/icons-material';
 import { CreateRounded } from '@mui/icons-material';
+import { CreatePost, GenerateAIImage } from '../api';
 
 const Form = styled.div`
   flex: 1;
@@ -54,11 +56,31 @@ const GenerateImageForm = ({
   generateImageLoading,
   setcreatePostLoading,
 }) => {
-  const generateImageFun = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const generateImageFun = async () => {
     setGenerateImageLoading(true);
-  }
-  const createPostFun = () =>{
+    await GenerateAIImage({ prompt: post.prompt })
+      .then((res) => {
+        setPost({ ...post, photo: `data:image/jpeg;base64,${res?.data?.photo}` });
+        setGenerateImageLoading(false);
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.message);
+        setGenerateImageLoading(false);
+      });
+  };
+  const createPostFun = async () => {
     setcreatePostLoading(true);
+    await CreatePost(post)
+      .then((res) => {
+        setcreatePostLoading(false);
+        navigate('/');
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.message);
+        setcreatePostLoading(false);
+      });
   }
   return (
     <Form>
@@ -72,7 +94,7 @@ const GenerateImageForm = ({
           placeholder="Enter your name ..."
           name="name"
           value={post.name}
-          handelChange={(e) => setPost({...post,name: e.target.value})}
+          handelChange={(e) => setPost({ ...post, name: e.target.value })}
         />
 
         <TextInput
@@ -82,8 +104,9 @@ const GenerateImageForm = ({
           rows="8"
           textArea
           value={post.prompt}
-          handelChange={(e) => setPost({...post,prompt: e.target.value})}
+          handelChange={(e) => setPost({ ...post, prompt: e.target.value })}
         />
+        {error && <div style={{ color: "red" }}>{error}</div>}
         ** You con post the AI Generated Image to the Community **
       </Body>
       <Actions>

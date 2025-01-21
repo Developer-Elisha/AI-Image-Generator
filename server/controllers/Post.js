@@ -45,3 +45,31 @@ export const createPost = async (req, res, next) => {
       );
     }
 }
+
+// Delete Post
+export const deletePost = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        // Find the post by ID
+        const post = await Post.findById(id);
+        if (!post) {
+            return next(createError(404, "Post not found"));
+        }
+
+        // Delete the photo from Cloudinary
+        const photoPublicId = post.photo.split('/').slice(-1)[0].split('.')[0]; // Extract public ID from photo URL
+        await cloudinary.uploader.destroy(photoPublicId);
+
+        // Delete the post from the database
+        await Post.findByIdAndDelete(id);
+
+        return res.status(200).json({ success: true, message: "Post deleted successfully" });
+    } catch (error) {
+        next(createError(
+            error.status,
+            error?.response?.data?.error?.message || error?.message
+        ));
+    }
+};
+

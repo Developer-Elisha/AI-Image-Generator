@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Button from './buttons'
 import { AddRounded, ExploreRounded } from "@mui/icons-material"
 import { useLocation, useNavigate } from 'react-router-dom'
+import logo from '../logo.png'
 
 const Container = styled.div`
    flec: 1;
@@ -26,7 +27,7 @@ const Navbar = () => {
     const path = location.pathname.split("/");
     return (
         <Container>
-            GenAI-Image
+            GenAI
             {
                 path[1] === 'post' ? (
                     <Button

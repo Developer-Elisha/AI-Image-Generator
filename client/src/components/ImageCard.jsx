@@ -62,30 +62,30 @@ const Author = styled.div`
 `;
 
 const ImageCard = ({ item }) => {
-    return (
-        <Card>
-            <LazyLoadImage
-                alt={item?.prompt}
-                style={{borderRadius: "12px"}}
-                width="100%"
-                src={item?.photo} />
-            <HoverOverlay>
-                <Prompt>{item?.prompt}</Prompt>
-                <div style={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                <Author>
-                    <Avatar sx={{ width: "27px", height: "27px" }}>{item?.author[0]}</Avatar>
-                    {item?.author}
-                </Author>
-                <DownloadRounded onClick={() => FileSaver.saveAs(item?.photo ,"download.jpg")} />
-                </div>
-            </HoverOverlay>
-        </Card>
-    )
+  return (
+    <Card>
+      <LazyLoadImage
+        alt={item?.prompt}
+        style={{ borderRadius: "12px" }}
+        width="100%"
+        src={item?.photo} />
+      <HoverOverlay>
+        <Prompt>{item?.prompt}</Prompt>
+        <div style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          <Author>
+            <Avatar sx={{ width: "27px", height: "27px" }}>{item?.name[0]}</Avatar>
+            {item?.name}
+          </Author>
+          <DownloadRounded onClick={() => FileSaver.saveAs(item?.photo, "download.jpg")} />
+        </div>
+      </HoverOverlay>
+    </Card>
+  )
 }
 
 export default ImageCard

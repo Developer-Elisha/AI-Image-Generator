@@ -15,7 +15,7 @@ const SeacrhBarContainer = styled.div`
   align-items:center
 `;
 
-const SeacrhBar = () => {
+const SeacrhBar = ({search, setSearch}) => {
   return (
     <SeacrhBarContainer>
         <SearchOutlined />
@@ -28,7 +28,10 @@ const SeacrhBar = () => {
             color: "inherit",
             fontSize: "16px",
             background: "transparent",
-        }}/>
+        }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
     </SeacrhBarContainer>
   )
 }
