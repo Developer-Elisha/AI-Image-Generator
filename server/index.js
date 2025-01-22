@@ -1,9 +1,10 @@
 import cors from 'cors';
 import express from 'express';
-import mongoose, { connect } from 'mongoose';
+import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import PostRouter from './routes/Post.js';
 import GenerateImageRouter from "./routes/GenerateImage.js";
+import { getAllPosts } from "./controllers/Post.js"; // ✅ Import getAllPosts
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// error handler
+// Error handler middleware
 app.use((err, req, res, next) => {
     const status = err.status || 500;
     const message = err.message || "Something went wrong";
@@ -23,18 +24,14 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Use your PostRouter for /api routes
-app.use("/api", PostRouter); // Set the base path to "/api"
+// Use routers
+app.use("/api", PostRouter);
 app.use("/api/generateImage", GenerateImageRouter);
 
-// Default get
-app.get("/get", async (req, res) => {
-    res.status(200).json({
-        message: "Hello",
-    });
-});
+// Default get: Return all posts
+app.get("/", getAllPosts); // ✅ Corrected to call getAllPosts function
 
-// function to connect to mongodb
+// Connect to MongoDB
 const connectDB = () => {
     mongoose.set("strictQuery", true);
     mongoose.connect(process.env.MONGODB_URL)
@@ -45,7 +42,7 @@ const connectDB = () => {
         });
 };
 
-// function to start the server
+// Start server
 const startServer = async () => {
     try {
         connectDB();
