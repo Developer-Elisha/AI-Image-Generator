@@ -1,5 +1,5 @@
 
-
+import React from 'react';
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme } from "./utils/Theme";
 import Home from "./pages/Home";
