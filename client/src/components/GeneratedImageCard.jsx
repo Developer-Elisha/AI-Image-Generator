@@ -1,4 +1,4 @@
-import { CircularProgress, Button } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -16,15 +16,6 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  background: ${({ theme }) => theme.black + "50"};
-  border-radius: 18px;
-  object-fit: cover;
-`;
-
 const ErrorMessage = styled.div`
   color: red;
   margin-top: 8px;
@@ -35,13 +26,13 @@ const GeneratedImageCard = ({ src, loading, onRetry }) => {
 
   useEffect(() => {
     if (loading) {
-      setShowError(false); // Hide error while still loading
+      setShowError(false);
     } else {
       const timer = setTimeout(() => {
-        setShowError(true); // Show error after 3 seconds when still loading
-      }, 3000); // 3 seconds delay
+        setShowError(true);
+      }, 3000);
 
-      return () => clearTimeout(timer); // Cleanup timer on component unmount
+      return () => clearTimeout(timer);
     }
   }, [loading]);
 

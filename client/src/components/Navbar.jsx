@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Button from './buttons'
 import { AddRounded, ExploreRounded } from "@mui/icons-material"
 import { useLocation, useNavigate } from 'react-router-dom'
-import logo from '../logo.png'
 
 const Container = styled.div`
    flec: 1;
