@@ -56,7 +56,7 @@ const Footer = () => {
         <FooterContainer>
             <FooterWrapper>
                 <FooterText>
-                    <FooterLink href="https://www.youtube.com/" target='_blank'>
+                    <FooterLink href="https://elisha-noel.vercel.app/" target='_blank'>
                         <Logo src={logo} alt="Logo" />
                         Elisha Noel.
                     </FooterLink>
